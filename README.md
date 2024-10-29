@@ -44,7 +44,7 @@ This project fine-tunes the **Llama 3.1 8B Instruct model** to create a tailored
 
 ## ⚙️ Setup and Installation
 
-### 1️⃣ Environment Setup
+### 1 Environment Setup
 
 #### 🔧 Step 1.1: Windows Subsystem for Linux
 - Use a Linux-based system for Unsloth. Download your preferred distribution [here](https://www.linux.org/pages/download/), or follow [Microsoft’s WSL guide](https://learn.microsoft.com/en-us/windows/wsl/install).
