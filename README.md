@@ -8,7 +8,7 @@ This repository contains the code and steps required to fine-tune the **Llama 3.
   - [🎯 Objective](#-objective)
   - [🗝️ Key Steps](#-key-steps)
 - [⚙️ Setup and Installation](#-setup-and-installation)
-  - [1️⃣ Environment Setup](#-1-environment-setup)
+  - [1️⃣ Environment Setup](#1-environment-setup)
     - [🔧 Step 1.1: Windows Subsystem for Linux](#-step-11-windows-subsystem-for-linux)
     - [🐍 Step 1.2: Anaconda](#-step-12-anaconda)
     - [📦 Step 1.3: Installing Unsloth](#-step-13-installing-unsloth)
