@@ -6,7 +6,7 @@ This repository contains the code and steps required to fine-tune the **Llama 3.
 
 - [📋 Project Overview](#-project-overview)
   - [🎯 Objective](#-objective)
-  - [🗝️ Key Steps](#-key-steps)
+  - [🗝️ Key Steps](#--key-steps)
 - [⚙️ Setup and Installation](#-setup-and-installation)
   - [1️⃣ Environment Setup](#1-environment-setup)
     - [🔧 Step 1.1: Windows Subsystem for Linux](#-step-11-windows-subsystem-for-linux)
