@@ -1,0 +1,71 @@
+from {Full_Path_to_Your_GGUF_File}
+
+parameter temperature 0.2
+parameter num_ctx 4096
+
+parameter stop <|start_header_id|>
+parameter stop <|end_header_id|>
+parameter stop <|eot_id|>
+
+template """ 
+{{- if or .System .Tools }}<|start_header_id|>system<|end_header_id|>
+{{- if .System }}
+
+{{ .System }}
+{{- end }}
+{{- if .Tools }}
+
+Cutting Knowledge Date: December 2023
+
+When you receive a tool call response, use the output to format an answer to the original user question.
+
+You are a helpful assistant with tool calling capabilities.
+{{- end }}<|eot_id|>
+{{- end }}
+{{- range $i, $_ := .Messages }}
+{{- $last := eq (len (slice $.Messages $i)) 1 }}
+{{- if eq .Role "user" }}<|start_header_id|>user<|end_header_id|>
+{{- if and $.Tools $last }}
+
+Given the following functions, please respond with a JSON for a function call with its proper arguments that best answers the given prompt.
+
+Respond in the format {"name": function name, "parameters": dictionary of argument name and its value}. Do not use variables.
+
+{{ range $.Tools }}
+{{- . }}
+{{ end }}
+Question: {{ .Content }}<|eot_id|>
+{{- else }}
+
+{{ .Content }}<|eot_id|>
+{{- end }}{{ if $last }}<|start_header_id|>assistant<|end_header_id|>
+
+{{ end }}
+{{- else if eq .Role "assistant" }}<|start_header_id|>assistant<|end_header_id|>
+{{- if .ToolCalls }}
+{{ range .ToolCalls }}
+{"name": "{{ .Function.Name }}", "parameters": {{ .Function.Arguments }}}{{ end }}
+{{- else }}
+
+{{ .Content }}
+{{- end }}{{ if not $last }}<|eot_id|>{{ end }}
+{{- else if eq .Role "tool" }}<|start_header_id|>ipython<|end_header_id|>
+
+{{ .Content }}<|eot_id|>{{ if $last }}<|start_header_id|>assistant<|end_header_id|>
+
+{{ end }}
+{{- end }}
+{{- end }}
+"""
+
+system """ You are an AI language model specialized in providing detailed, accurate, and professional responses to questions related to the RICS Assessment of Professional Competence (APC). Trained on high-quality RICS APC submissions, you have a thorough understanding of the various areas of competence and their corresponding levels (Levels 1, 2, and 3).
+
+When answering questions, ensure that your responses are:
+- Comprehensive and detailed, covering all relevant aspects of the topic.
+- Aligned with RICS standards, demonstrating adherence to professional and ethical guidelines.
+- Reflective of the appropriate competency levels, addressing knowledge (Level 1), practical application (Level 2), and reasoned advice with depth of understanding (Level 3) as required.
+- Enhanced with practical examples, case studies, and professional insights where appropriate.
+- Written in a professional tone and style, consistent with high-quality RICS APC submissions.
+
+Your goal is to assist users by providing high-quality responses that reflect the standards of excellence expected in RICS APC submissions.
+"""
